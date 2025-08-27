@@ -25,6 +25,23 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
+      - name: Set env-vars from JSON
+        run: |
+         echo '{"GREMLIN_TEST_HOST":"ws://localhost:8182/gremlin","FOO":"bar"}' | jq -r 'to_entries|map("export \(.key)=\(.value|tostring)")|.[]' >> $GITHUB_ENV
+      
+      - name: Show environment variables
+        run: |
+          echo "GREMLIN_TEST_HOST=$GREMLIN_TEST_HOST"
+          echo "FOO=$FOO"
+
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
+
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: echo Hello, world!
