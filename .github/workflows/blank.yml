@@ -15,6 +15,13 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  test:
+    name: Unit & Integration Tests
+    uses: DigitalPath-Inc/.github-private/.github/workflows/go-test.yaml@PLTM-342
+    with:
+      env-vars: |
+        GREMLIN_TEST=ws://localhost:8182/gremlin
+        FOO=bar
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
@@ -26,11 +33,7 @@ jobs:
 
       - name: Set env-vars from JSON
         run: |
-          echo '{"GREMLIN_TEST_HOST":"ws://localhost:8182/gremlin","FOO":"bar"}' | jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' >> $GITHUB_ENV
-
-      - name: Show environment variables
-        run: |
-          echo "GREMLIN_TEST_HOST=$GREMLIN_TEST_HOST"
+          echo "GREMLIN_TEST=$GREMLIN_TEST"
           echo "FOO=$FOO"
 
       - name: Run a one-line script
