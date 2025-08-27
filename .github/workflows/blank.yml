@@ -18,6 +18,7 @@ jobs:
   test:
     name: Unit & Integration Tests
     uses: DigitalPath-Inc/.github-private/.github/workflows/go-test.yaml@master
+    secrets: inherit
     with:
       env-vars: |
         GREMLIN_TEST=ws://localhost:8182/gremlin
